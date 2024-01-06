@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Group;
 
 class GroupController extends Controller
 {
@@ -29,7 +30,9 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            // валидационные правила
+            'title' => 'required|string|max:255',
+            'start_from' => 'required|date',
+            'is_active' => 'required|boolean',
         ]);
         Group::create($validatedData);
         return redirect('/groups');
@@ -41,29 +44,5 @@ class GroupController extends Controller
     public function show(Group $group)
     {
         return view('groups.show', compact('group'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

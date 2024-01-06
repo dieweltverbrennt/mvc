@@ -3,17 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Group;
+use App\Models\Student;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -28,8 +22,10 @@ class StudentController extends Controller
     public function store(Request $request, Group $group)
     {
         $validatedData = $request->validate([
-            // валидационные правила
+            'surname' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
+        
         $group->students()->create($validatedData);
         return redirect('/groups/'.$group->id);
     }
@@ -40,29 +36,5 @@ class StudentController extends Controller
     public function show(Group $group, Student $student)
     {
         return view('students.show', compact('group', 'student'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
